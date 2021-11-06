@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'quote.dart';
+import 'quote_card.dart';
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: QuoteList(),
   ));
 }
@@ -15,10 +17,10 @@ class QuoteList extends StatefulWidget {
 
 class _QuoteListState extends State<QuoteList> {
 
-  List<String> quotes = [
-    'Membenci itu menghabiskan energi lebih cepat',
-    'Sabar != memendam emosi',
-    'Sebagaimana engkau ingin Allah mengampunimu, maka maafkanlah saudaramu karena Allahu Ta\'ala'
+  List<Quote> quotes = [
+    Quote(from: 'instagram', text: 'Membenci itu menghabiskan energi lebih cepat'),
+    Quote(from: 'instagram', text: 'Sabar != memendam emosi'),
+    Quote(from: 'instagram', text: 'Sebagaimana engkau ingin Allah mengampunimu, maka maafkanlah saudaramu karena Allahu Ta\'ala'),
   ];
 
   @override
@@ -26,13 +28,21 @@ class _QuoteListState extends State<QuoteList> {
     return Scaffold(
       backgroundColor: Colors.grey[200],
       appBar: AppBar(
-      title: Text('Awesome Quotes'),
+      title: const Text('Awesome Quotes'),
         centerTitle: true,
         backgroundColor: Colors.redAccent,
       ),
       body: Column(
-        children: quotes.map((quote) => Text(quote)).toList(),
+        children: quotes.map((quote) => QuoteCard(
+          quote: quote,
+          delete: () {
+            setState(() {
+              quotes.remove(quote);
+            });
+          }
+        )).toList(),
       ),
     );
   }
 }
+
